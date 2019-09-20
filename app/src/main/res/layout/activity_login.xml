@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".Login"
+	android:background="@drawable/gradient_login">
+
+	<LinearLayout
+		android:id="@+id/linearLayout"
+		android:layout_width="match_parent"
+		android:layout_height="250dp"
+		android:background="@drawable/login_registration_logo_design"
+		android:orientation="vertical"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="right"
+			android:layout_marginTop="180dp"
+			android:layout_marginRight="10dp"
+			android:fontFamily="@font/aladin"
+			android:text="Login"
+			android:textColor="@color/colorAccent"
+			android:textSize="50sp" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/linearLayout2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+
+		android:padding="30dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+		<com.google.android.material.textfield.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:focusable="true"
+			android:focusableInTouchMode="true"
+			android:textColorHint="@color/colorAccent">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/email_id"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/edittext_design"
+				android:drawableStart="@drawable/ic_mail_black_24dp"
+				android:ems="10"
+				android:hint=" email"
+				android:inputType="textEmailAddress"
+				android:textSize="25sp" />
+		</com.google.android.material.textfield.TextInputLayout>
+		<com.google.android.material.textfield.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:focusable="true"
+			android:focusableInTouchMode="true"
+			android:textColorHint="@color/colorAccent"
+			app:passwordToggleEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/password"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/edittext_design"
+				android:drawableStart="@drawable/lock"
+				android:ems="10"
+				android:hint=" ******"
+				android:inputType="textPassword"
+				android:textSize="25sp" />
+		</com.google.android.material.textfield.TextInputLayout>
+
+
+		<CheckBox
+			android:id="@+id/checkbox_login"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:clickable="true"
+			android:focusable="true"
+			android:text="Remember Me"
+			android:textColor="@color/colorAccent" />
+		<TextView
+			android:id="@+id/tv1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end"
+			android:layout_marginTop="10dp"
+			android:clickable="true"
+			android:text="forgot password!"
+			android:textColor="@color/white"
+			android:textSize="20sp" />
+
+		<Button
+			android:id="@+id/login_btn"
+			android:layout_width="200dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="30dp"
+			android:background="@drawable/button"
+			android:padding="4dp"
+			android:text="Login"
+			android:textSize="25sp" />
+		<TextView
+			android:id="@+id/tv2"
+			android:layout_width="wrap_content"
+			android:layout_height="30dp"
+			android:layout_gravity="center"
+			android:layout_marginTop="10dp"
+			android:clickable="true"
+			android:text="Have an account!"
+			android:textColor="@color/white"
+			android:textSize="20dp" />
+
+		<Button
+			android:id="@+id/reg"
+			android:layout_width="200dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="10dp"
+			android:background="@drawable/button"
+			android:padding="4dp"
+			android:text="Register"
+			android:textSize="25sp" />
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="100dp"
+		android:layout_gravity="bottom|center"
+		android:layout_marginStart="24dp"
+		android:layout_marginEnd="24dp"
+		android:orientation="horizontal"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.49"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+		app:layout_constraintVertical_bias="0.0">
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/google"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_gravity="center"
+			android:background="@drawable/google_logo" />
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/facebook"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_gravity="center"
+			android:layout_marginLeft="10dp"
+			android:background="@drawable/facebook_icon" />
+
+	</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout >
