@@ -16,7 +16,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
@@ -77,15 +76,25 @@ public class Register extends AppCompatActivity {
                 }
 
 
-                //creating user
+                //creating user and addindg data into database
                 mAuth.createUserWithEmailAndPassword(email_id1, pass1).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()){
+                        if (task.isSuccessful()){
                             Users users= new Users(name,email_id1,phone);
 
-                            DatabaseReference current_user_db=FirebaseDatabase.getInstance().getReference().child("user").child("customers");
-                            current_user_db.setValue(users);
+                            FirebaseDatabase.getInstance().getReference("user").child("customers").child(FirebaseAuth.getInstance().getCurrentUser().getUid() ).setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                //for showing if the data passing is successfull!
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(getApplicationContext(), "Registration Successfull", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "Registration Error!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     }
                 });
