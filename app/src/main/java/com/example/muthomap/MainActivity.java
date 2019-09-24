@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //defining cards
+
+        //defining cards for the dashboard card view
         profilecard=(CardView) findViewById(R.id.profile_card);
         placescard= (CardView) findViewById(R.id.places_card);
         ridecard=(CardView) findViewById(R.id.ride_card);

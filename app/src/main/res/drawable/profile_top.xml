@@ -8,12 +8,9 @@
 
 		/>
 	<corners
-		android:bottomLeftRadius="100dp"
+		android:bottomLeftRadius="50dp"
+		android:bottomRightRadius="50dp"
 		/>
-	<stroke
-		android:width="4dp"
-		android:color="@color/colorAccent"
-		android:bottom="4dp"
-		/>
+
 
 </shape>

@@ -5,12 +5,15 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".Register"
-	android:background="@drawable/gradient_login">
+	android:background="@drawable/loginregisterbackground"
+	android:elevation="6dp">
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="250dp"
 		android:orientation="vertical"
-		android:background="@drawable/login_registration_logo_design">
+		android:background="@drawable/login_registration_logo_design"
+		>
+
 
 		<TextView
 			android:layout_width="wrap_content"

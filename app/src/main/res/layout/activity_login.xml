@@ -5,7 +5,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".Login"
-	android:background="@drawable/gradient_login">
+	android:background="@drawable/loginregisterbackground"
+	android:elevation="6dp">
 
 	<LinearLayout
 		android:id="@+id/linearLayout"

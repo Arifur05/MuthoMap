@@ -47,9 +47,9 @@ public class Login extends AppCompatActivity{
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if (user != null){
-                    finish();
                     Intent i= new Intent(Login.this, MainActivity.class);
                     startActivity(i);
+
                 }
 
             }
@@ -75,7 +75,12 @@ public class Login extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
 
-                            Toast.makeText(Login.this, "sign up error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Login.this, "Log in error!", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Intent intent= new Intent(Login.this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 });
