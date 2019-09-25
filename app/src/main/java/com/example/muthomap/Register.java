@@ -132,5 +132,6 @@ public class Register extends AppCompatActivity {
         this.name = name;
         this.email = email;
         this.phone = phone;
+
     }
 }

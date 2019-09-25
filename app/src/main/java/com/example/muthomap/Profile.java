@@ -7,20 +7,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +37,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 public class Profile extends AppCompatActivity {
 
@@ -62,6 +74,15 @@ public class Profile extends AppCompatActivity {
     //uri of picked image
     Uri image_uri;
 
+    //to check either profile or cover photo
+    String profileOrCoverPhoto;
+
+    //storage
+    StorageReference storageReference;
+
+    //path where imagees of profile and cover will  be stored
+    String storagePath = "Users_Profile_Cover_Image/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +100,8 @@ public class Profile extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference= firebaseDatabase.getReference("user").child("Customer");
+        databaseReference= firebaseDatabase.getReference("user").child("customers");
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         //intitalize arrays of permissions
         cameraPermissions= new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -144,9 +166,10 @@ public class Profile extends AppCompatActivity {
                 == (PackageManager.PERMISSION_GRANTED);
         return result;
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void requestStoragePermission(){
         //request runtime storage permission
-        ActivityCompat.requestPermissions(this,storagePermissions,STORAGE_REQUEST_CODE);
+        requestPermissions(storagePermissions,STORAGE_REQUEST_CODE);
     }
 
     private boolean checkCameraPermission(){
@@ -162,7 +185,9 @@ public class Profile extends AppCompatActivity {
     }
     private void requestCameraPermission(){
         //request runtime camera permission
-        ActivityCompat.requestPermissions(this,cameraPermissions,CAMERA_REQUEST_CODE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(cameraPermissions,CAMERA_REQUEST_CODE);
+        }
     }
 
 
@@ -190,19 +215,85 @@ public class Profile extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int which) {
                 if (which == 0){
                     progressDialog.setMessage("Updating Profile Picture");
+                    profileOrCoverPhoto = "image";
                     showImagePicDialog();
                 }
                 else if (which == 1){
                     progressDialog.setMessage("Updating Name");
+                    showNamePhoneUpdateDialog("name");
                 }
                 else if (which == 2){
                     progressDialog.setMessage("Updating Phone Number");
+                    showNamePhoneUpdateDialog("phone");
                 }
 
             }
         });
 
         builder.create().show();
+    }
+
+    private void showNamePhoneUpdateDialog(final String key) {
+
+        //custom dialog
+        AlertDialog.Builder builder= new AlertDialog.Builder(Profile.this);
+        builder.setTitle("Update "+ key);
+        //set layout of dialog
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(10,10,10,10);
+        //add edit text
+        final EditText editText = new EditText(Profile.this);
+        editText.setHint("Enter "+key);
+        linearLayout.addView(editText);
+
+        builder.setView(linearLayout);
+        //add button to update
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //input text
+                String val = editText.getText().toString().trim();
+                //validate if user has entered somethig or not
+                if ((!TextUtils.isEmpty(val))){
+                    progressDialog.show();
+                    HashMap<String, Object> results = new HashMap<>();
+                    results.put(key, val);
+
+                    databaseReference.child(user.getUid()).updateChildren(results)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Profile.this, "Updated", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Profile.this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+                }
+                else {
+                    Toast.makeText(Profile.this, "Please Enter ", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        //add button to cancel
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        //create and show dialog
+        builder.create().show();
+
     }
 
     private void showImagePicDialog() {
@@ -235,7 +326,9 @@ public class Profile extends AppCompatActivity {
                     //Gallery Picked
 
                     if (!checkStoragePermission()){
-                        requestStoragePermission();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestStoragePermission();
+                        }
                     }
                     else{
                         pickFromGallery();
@@ -270,6 +363,7 @@ public class Profile extends AppCompatActivity {
                    }
                }
            }
+           break;
 
            case STORAGE_REQUEST_CODE:{
                //picking from storage, first check if storage permission allowed or not
@@ -286,7 +380,8 @@ public class Profile extends AppCompatActivity {
             }
 
        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+       break;
+
     }
 }
 
@@ -304,6 +399,7 @@ public class Profile extends AppCompatActivity {
 
             if (resultCode == IMAGE_PICK_CAMERA_REQUEST_CODE){
                 //image is picked from Camera, get uri
+                uploadProfilePhoto(image_uri);
 
             }
         }
@@ -312,7 +408,66 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void uploadProfilePhoto(Uri image_uri) {
+    private void uploadProfilePhoto(final Uri uri) {
+        //show progress
+        progressDialog.show();
+
+        //path and name of image to be stored in firebase storage
+        String filePathAndName = storagePath+ ""+profileOrCoverPhoto +"_"+  user.getUid();
+        StorageReference storageReference2nd = storageReference.child(filePathAndName);
+        storageReference2nd.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isSuccessful());
+                Uri downloadUri = uriTask.getResult();
+
+                //check if uploading is successfull
+                if (uriTask.isSuccessful()){
+                    //image uploaded
+                    //add url in user's database
+                    HashMap<String,Object> results = new HashMap<>();
+
+                    results.put(profileOrCoverPhoto,downloadUri.toString());
+                    databaseReference.child("user").updateChildren(results)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //url in database of user is added successfully
+                                    //dismiss progress bar
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Profile.this, "Image Updated", Toast.LENGTH_SHORT).show();
+                                    
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
+
+                                    Toast.makeText(Profile.this, "Error Updating Image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+                else {
+                    //error
+                    progressDialog.dismiss();
+                    Toast.makeText(Profile.this, "Some Error Occurd", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(Profile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
 
     }
