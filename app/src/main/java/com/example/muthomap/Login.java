@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity{
         memail=(TextInputEditText) findViewById(R.id.email_id);
         mpass= (TextInputEditText) findViewById(R.id.password);
         mlogin=(Button)findViewById(R.id.login_btn);
-        mregister=(Button)findViewById(R.id.reg);
+        mregister=(Button)findViewById(R.id.reg_btn);
         mfpass=(TextView)findViewById(R.id.tv1);
 
         //firebase auth

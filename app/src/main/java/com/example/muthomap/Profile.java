@@ -47,7 +47,7 @@ import java.util.HashMap;
 public class Profile extends AppCompatActivity {
 
     //views
-    private ImageView profilephoto;
+    ImageView profilephoto;
     private TextView pname,pemail,pphone;
     private FloatingActionButton medit;
 
@@ -81,7 +81,12 @@ public class Profile extends AppCompatActivity {
     StorageReference storageReference;
 
     //path where imagees of profile and cover will  be stored
-    String storagePath = "Users_Profile_Cover_Image/";
+    String storagePath = "Users_Profile_Cover_Imgs/";
+
+    public Profile(){
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +95,18 @@ public class Profile extends AppCompatActivity {
 
 
 
-        profilephoto=(ImageView) findViewById(R.id.profile_photo);
-        pname=(TextView) findViewById(R.id.profile_name);
-        pemail=(TextView) findViewById(R.id.profile_email);
-        pphone=(TextView) findViewById(R.id.profile_mobile);
-        medit=(FloatingActionButton) findViewById(R.id.edit);
+        profilephoto= findViewById(R.id.profile_photo);
+        pname= findViewById(R.id.profile_name);
+        pemail= findViewById(R.id.profile_email);
+        pphone= findViewById(R.id.profile_mobile);
+        medit= findViewById(R.id.edit);
 
         //Initialize the FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference= firebaseDatabase.getReference("user").child("customers");
-        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference().child(storagePath);
 
         //intitalize arrays of permissions
         cameraPermissions= new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -134,7 +139,8 @@ public class Profile extends AppCompatActivity {
                    pemail.setText(email);
                    pphone.setText(phone);
                    try {
-                       Picasso.get().load(image).into(profilephoto);
+                       Picasso.get().load(image).resize(50, 50)
+                               .centerCrop().into(profilephoto);
                    } catch (Exception e) {
                        //if there is any exceptions while getting image then set defaults
                        Picasso.get().load(R.drawable.ic_default_face).into(profilephoto);
@@ -214,15 +220,18 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 if (which == 0){
+                    //Edit Profile picture clicked
                     progressDialog.setMessage("Updating Profile Picture");
                     profileOrCoverPhoto = "image";
                     showImagePicDialog();
                 }
                 else if (which == 1){
+                    //Edit Name clicked
                     progressDialog.setMessage("Updating Name");
                     showNamePhoneUpdateDialog("name");
                 }
                 else if (which == 2){
+                    //Edit Phone clicked
                     progressDialog.setMessage("Updating Phone Number");
                     showNamePhoneUpdateDialog("phone");
                 }
@@ -391,7 +400,7 @@ public class Profile extends AppCompatActivity {
         if (resultCode == RESULT_OK){
 
             if (resultCode == IMAGE_PICK_GALLERY_REQUEST_CODE){
-                //image is picked from gallery , get uri
+                //image is picked from gallery , get uri of image
                 image_uri = data.getData();
                 uploadProfilePhoto(image_uri);
 
@@ -408,18 +417,22 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void uploadProfilePhoto(final Uri uri) {
+    private void uploadProfilePhoto(Uri uri) {
         //show progress
         progressDialog.show();
 
+        /*The parameter "image_uri" contains the uri of image picked either from camera or gallery
+         *Will use UID of the currently signed in user as name of the image so ther will be only one image
+         * profile and one image for cover for each user */
+
         //path and name of image to be stored in firebase storage
-        String filePathAndName = storagePath+ ""+profileOrCoverPhoto +"_"+  user.getUid();
+        String filePathAndName = storagePath+ ""+ profileOrCoverPhoto +"_"+  user.getUid();
         StorageReference storageReference2nd = storageReference.child(filePathAndName);
         storageReference2nd.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isSuccessful());
+                while(!uriTask.isSuccessful());
                 Uri downloadUri = uriTask.getResult();
 
                 //check if uploading is successfull
@@ -428,8 +441,8 @@ public class Profile extends AppCompatActivity {
                     //add url in user's database
                     HashMap<String,Object> results = new HashMap<>();
 
-                    results.put(profileOrCoverPhoto,downloadUri.toString());
-                    databaseReference.child("user").updateChildren(results)
+                    results.put(profileOrCoverPhoto, downloadUri.toString());
+                    databaseReference.child(user.getUid()).updateChildren(results)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -480,7 +493,7 @@ public class Profile extends AppCompatActivity {
         values.put(MediaStore.Images.Media.DESCRIPTION, "Temp Description");
 
         //put image uri
-        image_uri=this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        image_uri=Profile.this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
 
         //intent to open camera
         Intent cameraIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

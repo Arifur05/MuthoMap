@@ -6,10 +6,6 @@
 	android:layout_height="match_parent"
 	android:background="#F1EDED"
 	tools:context=".Profile">
-	<ImageView
-		android:layout_width="match_parent"
-		android:layout_height="200dp"
-		android:src="@drawable/profile_top"/>
 
 	<ScrollView
 		android:layout_width="match_parent"
@@ -20,7 +16,8 @@
 			<ImageView
 				android:layout_width="match_parent"
 				android:layout_height="200dp"
-				android:src="@drawable/profile_top"/>
+				android:src="@drawable/profile_top"
+				android:scaleType="fitXY"/>
 
 			>-----Profile Picture------>
 			<LinearLayout
