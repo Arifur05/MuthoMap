@@ -10,6 +10,7 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
+		<activity android:name=".Places"></activity>
 		<activity android:name=".Welcome_screen">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -17,31 +18,22 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".Login"/>
+		<activity android:name=".Login" />
 		<activity android:name=".Register" />
 		<activity android:name=".MainActivity" />
 		<activity android:name=".Profile" />
 		<activity android:name=".Social" />
 		<activity android:name=".Services" />
 		<activity android:name=".Ride_Share" />
-		<activity
-			android:name=".Places"
-			android:label="@string/title_activity_places"
-			android:parentActivityName=".MainActivity"
-			android:theme="@style/AppTheme.NoActionBar">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.example.muthomap.MainActivity" />
-		</activity>
 	</application>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.CALL_PHONE" />
-
 	<uses-permission android:name="android.permission.INTERNET" />
+
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 	<dist:module dist:instant="true" />
 

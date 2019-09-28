@@ -32,8 +32,7 @@
 				android:layout_marginStart="20dp"
 				android:layout_marginLeft="20dp"
 				android:background="@color/Suzie"
-				android:src="@drawable/ic_default_face"
-				android:padding="5dp"/>
+				android:src="@drawable/ic_default_face" />
 
 
 			>-------Name and Mobile and email------->

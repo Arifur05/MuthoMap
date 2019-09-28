@@ -47,7 +47,7 @@ import java.util.HashMap;
 public class Profile extends AppCompatActivity {
 
     //views
-    ImageView profilephoto;
+    ImageView mprofilephoto;
     private TextView pname,pemail,pphone;
     private FloatingActionButton medit;
 
@@ -94,8 +94,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
 
-
-        profilephoto= findViewById(R.id.profile_photo);
+        mprofilephoto = findViewById(R.id.profile_photo);
         pname= findViewById(R.id.profile_name);
         pemail= findViewById(R.id.profile_email);
         pphone= findViewById(R.id.profile_mobile);
@@ -106,7 +105,7 @@ public class Profile extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference= firebaseDatabase.getReference("user").child("customers");
-        storageReference = FirebaseStorage.getInstance().getReference().child(storagePath);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         //intitalize arrays of permissions
         cameraPermissions= new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -139,11 +138,11 @@ public class Profile extends AppCompatActivity {
                    pemail.setText(email);
                    pphone.setText(phone);
                    try {
-                       Picasso.get().load(image).resize(50, 50)
-                               .centerCrop().into(profilephoto);
+                       Picasso.get().load(image).into(mprofilephoto);
                    } catch (Exception e) {
+                       Toast.makeText(Profile.this, "Error!", Toast.LENGTH_SHORT).show();
                        //if there is any exceptions while getting image then set defaults
-                       Picasso.get().load(R.drawable.ic_default_face).into(profilephoto);
+                       Picasso.get().load(R.drawable.ic_default_face).into(mprofilephoto);
                    }
                }
            }
@@ -399,14 +398,14 @@ public class Profile extends AppCompatActivity {
         //This method will be called after picking image from Camera or Gallery
         if (resultCode == RESULT_OK){
 
-            if (resultCode == IMAGE_PICK_GALLERY_REQUEST_CODE){
+            if (requestCode == IMAGE_PICK_GALLERY_REQUEST_CODE && data.getData() != null) {
                 //image is picked from gallery , get uri of image
                 image_uri = data.getData();
                 uploadProfilePhoto(image_uri);
 
             }
 
-            if (resultCode == IMAGE_PICK_CAMERA_REQUEST_CODE){
+            if (requestCode == IMAGE_PICK_CAMERA_REQUEST_CODE && data != null & data.getData() != null) {
                 //image is picked from Camera, get uri
                 uploadProfilePhoto(image_uri);
 
@@ -427,8 +426,8 @@ public class Profile extends AppCompatActivity {
 
         //path and name of image to be stored in firebase storage
         String filePathAndName = storagePath+ ""+ profileOrCoverPhoto +"_"+  user.getUid();
-        StorageReference storageReference2nd = storageReference.child(filePathAndName);
-        storageReference2nd.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        StorageReference ref = storageReference.child(filePathAndName);
+        ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
