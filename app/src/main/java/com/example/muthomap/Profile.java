@@ -88,6 +88,18 @@ public class Profile extends AppCompatActivity {
 
     }
 
+    /*
+    Check if Storage permission is granted or not
+     */
+    private boolean checkStoragePermission() {
+        /*check if storage permission is enebled or not
+        return true if enebled
+        return false if not
+         */
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,21 +173,18 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-
-    private boolean checkStoragePermission(){
-        /*check if storage permission is enebled or not
-        return true if enebled
-        return false if not
-         */
-        boolean result = ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
     @RequiresApi(api = Build.VERSION_CODES.M)
+    /*
+    Request for Storage Permission
+     */
     private void requestStoragePermission(){
         //request runtime storage permission
         requestPermissions(storagePermissions,STORAGE_REQUEST_CODE);
     }
+
+    /*
+    Check if Camera permission is granted or not
+     */
 
     private boolean checkCameraPermission(){
         /*check if storage permission is enebled or not
@@ -188,6 +197,10 @@ public class Profile extends AppCompatActivity {
                 == (PackageManager.PERMISSION_GRANTED);
         return result && result1;
     }
+
+    /*
+    Request for Camera Permission
+     */
     private void requestCameraPermission(){
         //request runtime camera permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

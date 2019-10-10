@@ -45,15 +45,15 @@ public class Login extends AppCompatActivity{
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                if (user != null){
-                    Intent i= new Intent(Login.this, MainActivity.class);
+                if (user != null) {
+                    Intent i = new Intent(Login.this, MainActivity.class);
                     startActivity(i);
-
+                    finish();
+                    return;
                 }
-
             }
         };
+
         //onclick listener
         mlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +100,16 @@ public class Login extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(firebaseauthlistener);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(firebaseauthlistener);
+    }
 
 }

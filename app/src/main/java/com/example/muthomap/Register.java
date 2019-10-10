@@ -27,7 +27,7 @@ public class Register extends AppCompatActivity {
 
     //views
     private FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener firebaseauthlistener;
+    FirebaseAuth.AuthStateListener mfirebaseauthlistener;
     private TextInputEditText mName, memail_id, mpass, mphone;
     private Button register;
     private ProgressDialog progressDialog;
@@ -51,7 +51,7 @@ public class Register extends AppCompatActivity {
         progressDialog= new ProgressDialog(Register.this);
 
 
-        firebaseauthlistener= new FirebaseAuth.AuthStateListener() {
+        mfirebaseauthlistener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

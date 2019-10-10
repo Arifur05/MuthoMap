@@ -1,15 +1,22 @@
 package com.example.muthomap;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CardView profilecard, placescard, ridecard,  servicecard, socialcard;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ridecard.setOnClickListener(this);
         servicecard.setOnClickListener(this);
         socialcard.setOnClickListener(this);
+
+        checkLocationPermission();
     }
 
     @Override
@@ -39,12 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
 
             case R.id.profile_card: i= new Intent(this,Profile.class);
-            startActivity(i);
-            break;
+                startActivity(i);
+                break;
             case R.id.places_card: i= new Intent( this, Places.class);
-            startActivity(i);
-            break;
-            case R.id.ride_card: i= new Intent( this, Ride_Share.class);
+                startActivity(i);
+                break;
+            case R.id.ride_card:
+                i = new Intent(this, RideShare.class);
                 startActivity(i);
                 break;
             case R.id.service_card: i= new Intent( this, Services.class);
@@ -54,6 +64,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             default: break;
+
+        }
+
+
+    }
+
+
+    private void checkLocationPermission() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new android.app.AlertDialog.Builder(this)
+                        .setTitle("Allert! Give Permission")
+                        .setMessage("Please give permission to gps for better performance")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                dialog.cancel();
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                finish();
+                return;
+
+            } else {
+                finishAffinity();
+                System.exit(0);
+            }
 
         }
 
