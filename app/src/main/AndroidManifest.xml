@@ -41,17 +41,7 @@
 		<activity
 			android:name=".RideShare"
 			android:label="@string/title_activity_ride_share"></activity>
-		<!--
-			 The API key for Google Maps-based APIs is defined as a string resource.
-			 (See the file "res/values/google_maps_api.xml").
-			 Note that the API key is linked to the encryption key used to sign the APK.
-			 You need a different API key for each encryption key, including the release key that is used to
-			 sign the APK for publishing.
-			 You can define the keys for the debug and release targets in src/debug/ and src/release/.
-		-->
-		<activity
-			android:name=".Ride_Share"
-			android:label="@string/title_activity_ride__share" />
+
 		<activity android:name=".Places" />
 		<activity
 			android:name=".Places_map"
@@ -72,31 +62,9 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".Login" />
-		<!--
-			 The API key for Google Maps-based APIs is defined as a string resource.
-			 (See the file "res/values/google_maps_api.xml").
-			 Note that the API key is linked to the encryption key used to sign the APK.
-			 You need a different API key for each encryption key, including the release key that is used to
-			 sign the APK for publishing.
-			 You can define the keys for the debug and release targets in src/debug/ and src/release/.
-		-->
-		<!--
-			 The API key for Google Maps-based APIs is defined as a string resource.
-			 (See the file "res/values/google_maps_api.xml").
-			 Note that the API key is linked to the encryption key used to sign the APK.
-			 You need a different API key for each encryption key, including the release key that is used to
-			 sign the APK for publishing.
-			 You can define the keys for the debug and release targets in src/debug/ and src/release/.
-		-->
+
 		<activity android:name=".Register" />
-		<!--
-			 The API key for Google Maps-based APIs is defined as a string resource.
-			 (See the file "res/values/google_maps_api.xml").
-			 Note that the API key is linked to the encryption key used to sign the APK.
-			 You need a different API key for each encryption key, including the release key that is used to
-			 sign the APK for publishing.
-			 You can define the keys for the debug and release targets in src/debug/ and src/release/.
-		-->
+
 		<activity android:name=".MainActivity" />
 		<activity android:name=".Profile" />
 		<activity android:name=".Social" />

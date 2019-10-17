@@ -7,4 +7,36 @@
 	tools:context=".Services">
 
 
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?actionBarSize"
+		android:background="@color/colorPrimaryDark"
+		android:gravity="center_vertical"
+		app:layout_scrollFlags="scroll|enterAlways"
+		app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+	<com.google.android.material.tabs.TabLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:tabGravity="fill"
+		app:tabMode="fixed"
+		android:minHeight="?actionBarSize"
+		app:tabIndicatorColor="@color/colorAccent"
+		app:tabIndicatorHeight="4dp"
+		app:tabIconTint="#ffff"
+		style="@style/Widget.MaterialComponents.TabLayout"
+		android:layout_marginTop="55dp"/>
+
+	<androidx.viewpager.widget.ViewPager
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/view_pager">
+		
+	</androidx.viewpager.widget.ViewPager>
+
+
+
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

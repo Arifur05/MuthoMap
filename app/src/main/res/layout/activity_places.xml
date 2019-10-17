@@ -28,19 +28,22 @@
 			android:textStyle="bold" />
 
 		<Spinner
-			android:id="@+id/search_spinner"
+			android:id="@+id/places_spinner"
 			android:layout_width="match_parent"
 			android:layout_height="40dp"
 			android:layout_alignTop="@id/select_place"
 			android:layout_marginTop="40dp"
 			android:background="@drawable/spinner"
-			android:dropDownWidth="wrap_content" />
+			android:dropDownWidth="wrap_content"
+			android:entries="@array/places_arrays"
+
+			/>
 
 		<TextView
 			android:id="@+id/search_area"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_alignTop="@id/search_spinner"
+			android:layout_alignTop="@id/places_spinner"
 			android:layout_marginTop="90dp"
 			android:gravity="center"
 			android:text="Select searching area"
@@ -49,7 +52,7 @@
 			android:textStyle="bold" />
 
 		<SeekBar
-			android:id="@+id/seekBar"
+			android:id="@+id/area_seekbar"
 			style="@style/Widget.AppCompat.SeekBar.Discrete"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -59,10 +62,10 @@
 			android:progress="3" />
 
 		<Button
-			android:id="@+id/search"
+			android:id="@+id/search_places"
 			android:layout_width="180dp"
 			android:layout_height="wrap_content"
-			android:layout_alignTop="@id/seekBar"
+			android:layout_alignTop="@id/area_seekbar"
 			android:layout_gravity="center_horizontal"
 			android:layout_marginTop="170dp"
 			android:background="@drawable/search_btn"

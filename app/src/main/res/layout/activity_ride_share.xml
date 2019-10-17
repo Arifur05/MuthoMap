@@ -21,25 +21,9 @@
 		android:layout_marginTop="40dp"
 		android:layout_marginEnd="16dp"
 		android:elevation="15dp"
-		app:cardCornerRadius="15dp">
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="#ffff"
-				android:orientation="horizontal">
-
-				<ImageView
-					android:layout_width="45dp"
-					android:layout_height="match_parent"
-					android:background="@drawable/ic_from" />
-
-				<com.mancj.materialsearchbar.MaterialSearchBar
+		app:cardCornerRadius="15dp"
+		>
+		<com.mancj.materialsearchbar.MaterialSearchBar
 					android:id="@+id/pickup"
 					style="@style/MaterialSearchBarLight"
 					android:layout_width="match_parent"
@@ -47,63 +31,87 @@
 					android:elevation="15dp"
 					android:outlineProvider="bounds"
 					app:mt_backIconTint="@color/colorPrimaryDark"
-					app:mt_borderlessRippleEnabled="true"
+					app:mt_borderlessRippleEnabled="false"
 					app:mt_hint="Search a place"
-					app:mt_maxSuggestionsCount="10"
+					app:mt_maxSuggestionsCount="5"
 					app:mt_placeholder="Search a place"
 					app:mt_placeholderColor="@color/colorAccent"
-					app:mt_speechMode="false" />
-			</LinearLayout>
-
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="2dp"
-				android:background="#000000" />
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="#ffff"
-				android:orientation="horizontal">
-
-				<ImageView
-					android:layout_width="45dp"
-					android:layout_height="match_parent"
-					android:background="@drawable/ic_to" />
-
-				<com.mancj.materialsearchbar.MaterialSearchBar
-					android:id="@+id/destination"
-					style="@style/MaterialSearchBarLight"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:elevation="15dp"
-					android:outlineProvider="bounds"
-					app:mt_backIconTint="@color/colorPrimaryDark"
-					app:mt_borderlessRippleEnabled="true"
-					app:mt_hint="Search a destination"
-					app:mt_maxSuggestionsCount="10"
-					app:mt_placeholder="Destination"
-					app:mt_placeholderColor="@color/colorAccent"
 					app:mt_speechMode="false"
-
+					app:mt_navIconEnabled="true"
+					app:mt_navIconTint="@color/colorPrimaryDark"
 
 					/>
-			</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+
+<LinearLayout
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_alignParentBottom="true">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_gravity="bottom"
+		android:id="@+id/driverInfo"
+		android:background="#ffff"
+		android:visibility="gone"
+		>
+		<ImageView
+			android:layout_width="120dp"
+			android:layout_height="120dp"
+			android:id="@+id/driverImage"
+			android:src="@drawable/ic_default_face"
+			android:padding="20sp"
+			/>
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingLeft="40sp"
+			>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/driverName"
+				android:paddingBottom="10dp"
+				android:paddingTop="20dp"
+				/>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/driverPhone"
+				android:paddingBottom="10dp"
+				android:paddingTop="20dp"
+				/>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/driverRegno"
+				android:paddingBottom="10dp"
+				android:paddingTop="20dp"
+				/>
+			<RatingBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/driverRating"
+				android:numStars="5"
+				android:stepSize="0.1"
+				android:layout_gravity="center"/>
 		</LinearLayout>
-	</com.google.android.material.card.MaterialCardView>
 
 
+	</LinearLayout>
 	<Button
 		android:id="@+id/getRide"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
 		android:layout_margin="16dp"
 		android:background="@color/colorAccent"
 		android:elevation="15dp"
-		android:text="Get Ride"
+		android:text="@string/get_ride"
 		android:textColor="#ffff"
-		android:textSize="25sp"
 		app:cornerRadius="15dp" />
+</LinearLayout>
 
 </RelativeLayout>

@@ -162,10 +162,5 @@ public class Register extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed(); //go to previous activity
-        startActivity(new Intent(Register.this,Login.class));
-        return super.onSupportNavigateUp();
-    }
+
 }

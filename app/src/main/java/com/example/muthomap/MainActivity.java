@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,8 @@ import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CardView profilecard, placescard, ridecard,  servicecard, socialcard;
+    private CardView profilecard, placescard, ridecard, servicecard, socialcard;
+
 
 
     @Override
@@ -24,11 +26,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //defining cards for the dashboard card view
-        profilecard=(CardView) findViewById(R.id.profile_card);
-        placescard= (CardView) findViewById(R.id.places_card);
-        ridecard=(CardView) findViewById(R.id.ride_card);
-        servicecard=(CardView)findViewById(R.id.service_card);
-        socialcard=(CardView)findViewById(R.id.social_card);
+        profilecard = (CardView) findViewById(R.id.profile_card);
+        placescard = (CardView) findViewById(R.id.places_card);
+        ridecard = (CardView) findViewById(R.id.ride_card);
+        servicecard = (CardView) findViewById(R.id.service_card);
+        socialcard = (CardView) findViewById(R.id.social_card);
 
         //setting on click listener
         profilecard.setOnClickListener(this);
@@ -40,83 +42,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkLocationPermission();
     }
 
+
+
     @Override
     //navigation through layouts
     public void onClick(View view) {
         Intent i;
 
-        switch (view.getId()){
+        switch (view.getId()) {
 
-            case R.id.profile_card: i= new Intent(this,Profile.class);
+            case R.id.profile_card:
+                i = new Intent(this, Profile.class);
                 startActivity(i);
                 break;
-            case R.id.places_card: i= new Intent( this, Places.class);
+            case R.id.places_card:
+                i = new Intent(this, Places.class);
                 startActivity(i);
                 break;
             case R.id.ride_card:
                 i = new Intent(this, RideShare.class);
                 startActivity(i);
                 break;
-            case R.id.service_card: i= new Intent( this, Services.class);
+            case R.id.service_card:
+                i = new Intent(this, Services.class);
                 startActivity(i);
                 break;
-            case R.id.social_card: i= new Intent( this, Social.class);
+            case R.id.social_card:
+                i = new Intent(this, Social.class);
                 startActivity(i);
                 break;
-            default: break;
+            default:
+                break;
 
         }
-
-
     }
 
-
     private void checkLocationPermission() {
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
                 new android.app.AlertDialog.Builder(this)
-                        .setTitle("Allert! Give Permission")
-                        .setMessage("Please give permission to gps for better performance")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setTitle("give permission")
+                        .setMessage("give permission message")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                dialog.cancel();
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                             }
                         })
                         .create()
                         .show();
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+            else{
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
-
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode){
+            case 1:{
+                if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                finish();
-                return;
-
-            } else {
-                finishAffinity();
-                System.exit(0);
+                        return;
+                    }
+                } else{
+                    Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
+                }
+                break;
             }
-
         }
-
-
     }
 }

@@ -133,10 +133,10 @@
 			android:id="@+id/google"
 			android:layout_width="60dp"
 			android:layout_height="60dp"
-			android:background="@drawable/google_logo"
+			android:background="@drawable/google"
 			android:layout_gravity="center"
 			android:clickable="true"
-			android:padding="6dp"
+			android:padding="0dp"
 			/>
 		<androidx.appcompat.widget.AppCompatImageView
 			android:id="@+id/facebook"
@@ -146,7 +146,7 @@
 			android:layout_gravity="center"
 			android:layout_marginLeft="30dp"
 			android:clickable="true"
-			android:padding="6dp"
+			android:padding="0dp"
 			/>
 	</LinearLayout>
 

@@ -21,7 +21,7 @@
 			app:layout_scrollFlags="exitUntilCollapsed|scroll"
 			app:contentScrim="?attr/colorPrimary"
 			app:expandedTitleMarginEnd="64dp"
-			app:expandedTitleMarginStart="48dp"
+			app:expandedTitleMarginStart="50dp"
 			app:title="Mutho Map"
 			android:background="@drawable/materialbackground">
 
@@ -315,6 +315,7 @@
 
 
 			</LinearLayout>
+
 
 
 			</LinearLayout>

@@ -155,7 +155,7 @@
 			android:layout_width="60dp"
 			android:layout_height="60dp"
 			android:layout_gravity="center"
-			android:background="@drawable/google_logo"
+			android:background="@drawable/google"
 			android:padding="6dp"/>
 
 		<androidx.appcompat.widget.AppCompatImageView
@@ -164,8 +164,9 @@
 			android:layout_height="60dp"
 			android:layout_gravity="center"
 			android:layout_marginLeft="10dp"
-			android:background="@drawable/facebook_icon"
-			android:padding="6dp"/>
+			android:layout_marginStart="30dp"
+			android:src="@drawable/facebook_icon"
+			android:padding="0dp"/>
 
 	</LinearLayout>
 
