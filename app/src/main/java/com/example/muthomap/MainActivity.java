@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.places_card:
-                i = new Intent(this, Places.class);
+                i = new Intent(this, PlacesSearch.class);
                 startActivity(i);
                 break;
             case R.id.ride_card:

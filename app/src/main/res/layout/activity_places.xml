@@ -1,80 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#E9C6F3"
 	tools:context=".Places">
 
-	<com.google.android.material.card.MaterialCardView
+
+<fragment
+	android:id="@+id/map"
+	android:name="com.google.android.gms.maps.SupportMapFragment"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	/>
+
+	<com.mancj.materialsearchbar.MaterialSearchBar
+		android:id="@+id/search_places"
+		style="@style/MaterialSearchBarLight"
 		android:layout_width="match_parent"
-		android:layout_height="260dp"
-		android:layout_gravity="top"
+		android:layout_height="wrap_content"
+		android:elevation="15dp"
+		android:outlineProvider="bounds"
+		app:mt_backIconTint="@color/colorPrimaryDark"
+		app:mt_borderlessRippleEnabled="false"
+		app:mt_hint="Search Desired Place Type"
+		app:mt_maxSuggestionsCount="5"
+		app:mt_placeholder="Search Desired Place Type"
+		app:mt_placeholderColor="@color/colorAccent"
+		app:mt_speechMode="false"
+		app:mt_navIconEnabled="true"
+		app:mt_navIconTint="@color/colorPrimaryDark"
 		android:layout_marginStart="16dp"
-		android:layout_marginTop="60dp"
 		android:layout_marginEnd="16dp"
-		android:elevation="15mm"
-		app:cardCornerRadius="6dp">
+		android:layout_marginTop="32dp"
+		/>
 
-		<TextView
-			android:id="@+id/select_place"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="Select a place"
-			android:textColor="@color/colorAccent"
-			android:textSize="20sp"
-			android:textStyle="bold" />
-
-		<Spinner
-			android:id="@+id/places_spinner"
-			android:layout_width="match_parent"
-			android:layout_height="40dp"
-			android:layout_alignTop="@id/select_place"
-			android:layout_marginTop="40dp"
-			android:background="@drawable/spinner"
-			android:dropDownWidth="wrap_content"
-			android:entries="@array/places_arrays"
-
-			/>
-
-		<TextView
-			android:id="@+id/search_area"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignTop="@id/places_spinner"
-			android:layout_marginTop="90dp"
-			android:gravity="center"
-			android:text="Select searching area"
-			android:textColor="@color/colorAccent"
-			android:textSize="20sp"
-			android:textStyle="bold" />
-
-		<SeekBar
-			android:id="@+id/area_seekbar"
-			style="@style/Widget.AppCompat.SeekBar.Discrete"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignTop="@id/search_area"
-			android:layout_marginTop="130dp"
-			android:max="5"
-			android:progress="3" />
-
-		<Button
-			android:id="@+id/search_places"
-			android:layout_width="180dp"
-			android:layout_height="wrap_content"
-			android:layout_alignTop="@id/area_seekbar"
-			android:layout_gravity="center_horizontal"
-			android:layout_marginTop="170dp"
-			android:background="@drawable/search_btn"
-			android:text="Search"
-			android:textColor="@color/colorAccent"
-			android:textSize="30sp"
-			android:textStyle="bold" />
-
-	</com.google.android.material.card.MaterialCardView>
+	<Button
+		android:id="@+id/search"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/button"
+		android:layout_gravity="bottom|center"
+		android:layout_marginBottom="16dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:text="Search"
+		android:textColor="#ffff"
+		android:textStyle="bold"
+		android:textSize="25sp"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

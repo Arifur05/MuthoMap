@@ -3,12 +3,323 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".BookTicket">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	tools:context=".BookTicket"
+	android:background="#A09E9E">
 
-	<!-- TODO: Update blank fragment layout -->
-	<TextView
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:text="@string/hello_blank_fragment" />
+		android:layout_height="250dp"
+		android:orientation="vertical"
+		android:background="@drawable/europe_cities"
+		android:backgroundTint="#3FFFFFFF"
+		android:backgroundTintMode="src_over"
+
+		>
+
+		<TextView
+			android:id="@+id/tickettng"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Mutho Map Ticketing"
+			android:textSize="35sp"
+			android:textColor="#000000"
+			android:fontFamily="@font/aladin"
+			android:textStyle="bold"
+			android:layout_gravity="center"
+			android:layout_marginTop="30dp"
+			android:shadowColor="#FF9100"
+			android:shadowDx="-4"
+			android:shadowDy="2"
+			android:shadowRadius="0.02"
+			/>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_gravity="center"
+			android:layout_marginTop="30dp"
+			android:elevation="50dp">
+			<Button
+				android:id="@+id/single_way"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:background="@drawable/button_booking"
+				android:elevation="15dp"
+				android:text="Single Way"
+				android:textSize="15sp"
+				android:padding="10dp"
+				android:layout_marginRight="10dp"
+
+				/>
+			<Button
+				android:id="@+id/rounded"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:background="@drawable/button_booking"
+				android:elevation="15dp"
+				android:text="Rounded"
+				android:textSize="15sp"
+				android:padding="10dp"
+				android:layout_marginLeft="10dp"/>
+		</LinearLayout>
+	</LinearLayout>
+
+<com.google.android.material.card.MaterialCardView
+	android:id="@+id/cardView"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardBackgroundColor="@color/white"
+	app:cardCornerRadius="10dp"
+	android:layout_marginTop="180dp"
+	android:layout_marginStart="16dp"
+	android:layout_marginEnd="16dp"
+	android:visibility="visible"
+	app:cardElevation="10dp"
+	>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_gravity="center"
+		android:layout_margin="16dp"
+		>
+
+		<TextView
+			android:id="@+id/from"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="From"
+
+			android:textSize="20sp"
+			android:layout_gravity="center"
+			android:textColor="#566FE7"/>
+
+		<EditText
+			android:id="@+id/from_input"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:background="@drawable/edittext_design2"
+			android:layout_marginTop="10dp"/>
+
+		<TextView
+			android:id="@+id/to"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="To"
+
+			android:textSize="20sp"
+			android:layout_gravity="center"
+			android:textColor="#566FE7"
+			android:layout_marginTop="10dp"/>
+
+		<EditText
+			android:id="@+id/to_input"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:background="@drawable/edittext_design2"
+			android:layout_marginTop="10dp"/>
+
+		<TextView
+			android:id="@+id/passenger"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Number of Tickets"
+
+			android:textSize="20sp"
+			android:layout_gravity="center"
+			android:textColor="#566FE7"
+			android:layout_marginTop="10dp"/>
+
+		<EditText
+			android:id="@+id/passenger_input"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:background="@drawable/edittext_design2"
+			android:layout_marginTop="10dp"
+			android:inputType="number"/>
+
+
+
+				<TextView
+					android:id="@+id/dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Departure Date"
+					android:textSize="20sp"
+					android:textColor="#566FE7"
+
+					android:layout_gravity="center"
+					android:layout_marginTop="10dp"/>
+
+			<EditText
+				android:id="@+id/date1"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:background="@drawable/edittext_design2"
+				android:hint="  DD/MM/YY"
+				android:layout_marginTop="10dp"/>
+
+
+
+		<Button
+			android:id="@+id/submit"
+			android:layout_width="150dp"
+			android:layout_height="wrap_content"
+			android:text="Submit"
+			android:textStyle="bold"
+			android:textSize="15sp"
+			android:background="@drawable/button_booking"
+			android:layout_marginTop="60dp"
+			android:layout_gravity="center"
+			android:layout_marginBottom="25dp"/>
+
+	</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+	//layout for when Rounded is clicked
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/cardView2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:cardBackgroundColor="@color/white"
+		app:cardCornerRadius="8dp"
+		android:layout_marginTop="180dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:visibility="invisible"
+		app:cardElevation="10dp">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_gravity="center"
+			android:layout_margin="16dp">
+
+			<TextView
+				android:id="@+id/from2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="From"
+
+				android:textSize="20sp"
+				android:layout_gravity="center"
+				android:textColor="#566FE7"/>
+
+			<EditText
+				android:id="@+id/from_input2"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:background="@drawable/edittext_design2"
+				android:layout_marginTop="10dp"/>
+
+			<TextView
+				android:id="@+id/to2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="To"
+				android:textSize="20sp"
+				android:layout_gravity="center"
+				android:textColor="#566FE7"
+				android:layout_marginTop="10dp"/>
+
+			<EditText
+				android:id="@+id/to_input2"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:background="@drawable/edittext_design2"
+				android:layout_marginTop="10dp"/>
+
+			<TextView
+				android:id="@+id/passenger2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Number of Tickets"
+				android:textSize="20sp"
+				android:layout_gravity="center"
+				android:textColor="#566FE7"
+				android:layout_marginTop="10dp"/>
+
+			<EditText
+				android:id="@+id/passenger_input2"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:background="@drawable/edittext_design2"
+				android:layout_marginTop="10dp"
+				android:inputType="number"/>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="10dp"
+				android:weightSum="10">
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:layout_weight="5">
+					<TextView
+						android:id="@+id/dp2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Departure Date"
+						android:textSize="20sp"
+						android:textColor="#566FE7"
+
+						/>
+					<EditText
+						android:id="@+id/date2"
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:background="@drawable/edittext_design2"
+						android:hint="  DD/MM/YY"
+						android:layout_margin="6dp"/>
+				</LinearLayout>
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:layout_weight="5">
+					<TextView
+						android:id="@+id/returndate"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Return Date"
+						android:textSize="20sp"
+						android:textColor="#566FE7"
+						></TextView>
+					<EditText
+						android:id="@+id/date3"
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:background="@drawable/edittext_design2"
+						android:hint="  DD/MM/YY"
+						android:layout_margin="6dp"
+						android:shadowColor="#464646"/>
+				</LinearLayout>
+			</LinearLayout>
+
+			<Button
+				android:id="@+id/submit2"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:text="Submit"
+				android:textStyle="bold"
+				android:textSize="15sp"
+				android:background="@drawable/button_booking"
+				android:layout_marginTop="60dp"
+				android:layout_gravity="center"
+				android:layout_marginBottom="25dp"/>
+
+		</LinearLayout>
+	</com.google.android.material.card.MaterialCardView>
+
+
+
+
+
 
 </FrameLayout>

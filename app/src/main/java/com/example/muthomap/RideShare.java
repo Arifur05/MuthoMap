@@ -108,7 +108,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
     //init views
     private Button mgetRide;
-     MaterialSearchBar mpickup;
+    private MaterialSearchBar mpickup;
     private View mapView;
 
     @Override

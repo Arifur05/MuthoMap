@@ -16,23 +16,10 @@
 	<string name="menu_send">Send</string>
 	<string name="title_activity_map">Map</string>
 	<string name="title_activity_maps">Map</string>
-	<string name="title_activity_places_map">Map</string>
 	<string name="title_activity_ride__share">Map</string>
 	<string name="title_activity_ride_share">Map</string>
 	<string name="get_ride">Get Ride</string>
 
-	<string-array name="places_arrays">
-		<item>ATM Booth</item>
-		<item>Hospitals</item>
-		<item>Schools</item>
-		<item>College</item>
-		<item>University</item>
-		<item>Toilets</item>
-		<item>Shopping Malls</item>
-		<item>Prayer Hall</item>
-
-
-	</string-array>
 
 	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
