@@ -5,7 +5,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".RideShare">
+	tools:context=".fragments.RideShare">
 
 	<fragment
 		android:id="@+id/map"
@@ -24,7 +24,7 @@
 		app:cardCornerRadius="15dp"
 		>
 		<com.mancj.materialsearchbar.MaterialSearchBar
-					android:id="@+id/pickup"
+					android:id="@+id/destination"
 					style="@style/MaterialSearchBarLight"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
 			android:layout_width="120dp"
 			android:layout_height="120dp"
 			android:id="@+id/driverImage"
-			android:src="@drawable/ic_default_face"
+			app:srcCompat="@drawable/ic_default_face"
 			android:padding="20sp"
 			/>
 		<LinearLayout

@@ -1,4 +1,4 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.muthomap.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

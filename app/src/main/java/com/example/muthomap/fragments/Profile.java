@@ -1,4 +1,4 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -25,6 +25,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.muthomap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

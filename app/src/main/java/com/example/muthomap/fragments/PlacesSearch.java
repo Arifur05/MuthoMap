@@ -1,6 +1,7 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +9,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+
+import com.example.muthomap.R;
 
 public class PlacesSearch extends AppCompatActivity {
 
@@ -19,6 +22,12 @@ public class PlacesSearch extends AppCompatActivity {
     private Button mSearchButton;
     String placeName;
     String placeType;
+
+    public static final String TAG = "CurrentLocNearByPlaces";
+    private static final int LOC_REQ_CODE = 1;
+
+
+    protected RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,4 +105,5 @@ public class PlacesSearch extends AppCompatActivity {
         });
 
     }
+
 }

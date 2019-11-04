@@ -1,8 +1,10 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.muthomap.R;
 
 public class Social extends AppCompatActivity {
 

@@ -4,7 +4,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	tools:context=".BookTicket"
+	tools:context=".fragments.BookTicket"
 	android:background="#A09E9E">
 
 	<LinearLayout
@@ -12,7 +12,7 @@
 		android:layout_height="250dp"
 		android:orientation="vertical"
 		android:background="@drawable/europe_cities"
-		android:backgroundTint="#3FFFFFFF"
+		android:backgroundTint="#3FB8B8B8"
 		android:backgroundTintMode="src_over"
 
 		>

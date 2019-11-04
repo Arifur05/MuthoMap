@@ -1,4 +1,4 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

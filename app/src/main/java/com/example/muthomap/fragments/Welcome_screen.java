@@ -1,10 +1,12 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.muthomap.R;
 
 public class Welcome_screen extends AppCompatActivity {
     /** Duration of wait **/

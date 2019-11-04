@@ -1,4 +1,4 @@
-package com.example.muthomap;
+package com.example.muthomap.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.muthomap.R;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -108,7 +109,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
     //init views
     private Button mgetRide;
-    private MaterialSearchBar mpickup;
+    private MaterialSearchBar mdestination;
     private View mapView;
 
     @Override
@@ -116,7 +117,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_share);
 
-        mpickup = findViewById(R.id.pickup);
+        mdestination = findViewById(R.id.destination);
 
         mgetRide = findViewById(R.id.getRide);
 
@@ -166,7 +167,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                     pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLocation).title("Pick me here")
                             .icon(bitmapDescriptorFromVector(RideShare.this,R.drawable.ic_pickup)));
 
-                    mgetRide.setText("Searching for ride");
+                    mgetRide.setText("Searching for Driver");
 
                     getClosestDriver();
 
@@ -177,7 +178,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
 
         //material Search bar code starts----> pickup location
-        mpickup.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+        mdestination.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
 
@@ -195,7 +196,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
             public void onButtonClicked(int buttonCode) {
 
                 if (buttonCode == MaterialSearchBar.BUTTON_BACK){
-                    mpickup.disableSearch();
+                    mdestination.disableSearch();
                 }
 
             }
@@ -205,7 +206,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
         //pickup location search bar
 
-        mpickup.addTextChangeListener(new TextWatcher() {
+        mdestination.addTextChangeListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -232,9 +233,9 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                                     AutocompletePrediction autocompletePrediction=predictionList.get(i);
                                     suggestions.add(autocompletePrediction.getFullText(null).toString());
                                 }
-                                mpickup.updateLastSuggestions(suggestions);
-                                if (!mpickup.isSuggestionsVisible()){
-                                    mpickup.showSuggestionsList();
+                                mdestination.updateLastSuggestions(suggestions);
+                                if (!mdestination.isSuggestionsVisible()){
+                                    mdestination.showSuggestionsList();
                                 }
 
                             }
@@ -255,26 +256,26 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         });
 
 
-        mpickup.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
+        mdestination.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
             @Override
             public void OnItemClickListener(int position, View v) {
                 if(position >= predictionList.size()){
                     return;
                 }
                 AutocompletePrediction selectedPrediction = predictionList.get(position);
-                String suggestion = mpickup.getLastSuggestions().get(position).toString();
-                mpickup.setText(suggestion);
+                String suggestion = mdestination.getLastSuggestions().get(position).toString();
+                mdestination.setText(suggestion);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mpickup.clearSuggestions();
+                        mdestination.clearSuggestions();
                     }
                 },500);
 
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 if(inputMethodManager != null){
-                    inputMethodManager.hideSoftInputFromWindow(mpickup.getWindowToken(),InputMethodManager.HIDE_IMPLICIT_ONLY);
+                    inputMethodManager.hideSoftInputFromWindow(mdestination.getWindowToken(),InputMethodManager.HIDE_IMPLICIT_ONLY);
                     final String placeId = selectedPrediction.getPlaceId();
                     List<Place.Field> placeFields= Arrays.asList(Place.Field.LAT_LNG);
                     FetchPlaceRequest fetchPlaceRequest= FetchPlaceRequest.builder(placeId,placeFields).build();
@@ -326,7 +327,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
     /* ----->Get Closest Driver method <-------
       |  This method is responsible for getting driver for request |
     */
-    private int radius=1000;
+    private int radius=100;
     private Boolean driverFound= false;
     private String driverFoundID;
     GeoQuery geoQuery;
@@ -352,18 +353,21 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                                 if (driverFound){
                                     return;
                                 }
-                                if (driverMap.get("service").equals(requestService)){
+                                if (driverMap.get("service"). equals(requestService)){
                                     driverFound=true;
                                     driverFoundID=dataSnapshot.getKey();
+                                    String destinationName= destination;
+                                    Double destinationLat= destinationLocation.latitude;
+                                    Double destinationLng= destinationLocation.longitude;
 
-                                    DatabaseReference driverref= FirebaseDatabase.getInstance().getReference().child("user").child("service_provider").child("uber_driver")
+                                    DatabaseReference driverref= FirebaseDatabase.getInstance().getReference("user").child("service_provider").child("uber_driver")
                                             .child(driverFoundID).child("customer_request");
                                     String customerID= FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     HashMap hashMap= new HashMap();
                                     hashMap.put("customerRideID",customerID);
-                                    hashMap.put("destination",destination);
-                                    hashMap.put("destinationLat",destinationLocation.latitude);
-                                    hashMap.put("destinationLng",destinationLocation.longitude);
+                                    hashMap.put("destination",destinationName);
+                                    hashMap.put("destinationLat",destinationLat);
+                                    hashMap.put("destinationLng",destinationLng);
 
                                     driverref.updateChildren(hashMap);
 
@@ -642,11 +646,11 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public boolean onMyLocationButtonClick() {
 
-                if (mpickup.isSuggestionsVisible()){
-                    mpickup.clearSuggestions();
+                if (mdestination.isSuggestionsVisible()){
+                    mdestination.clearSuggestions();
                 }
-                if(mpickup.isSearchEnabled()){
-                    mpickup.disableSearch();
+                if(mdestination.isSearchEnabled()){
+                    mdestination.disableSearch();
                 }
 
 
