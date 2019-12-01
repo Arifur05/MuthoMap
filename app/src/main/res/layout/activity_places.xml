@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -8,47 +7,29 @@
 	tools:context=".fragments.Places">
 
 
-<fragment
-	android:id="@+id/map"
-	android:name="com.google.android.gms.maps.SupportMapFragment"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	/>
-
-	<com.mancj.materialsearchbar.MaterialSearchBar
-		android:id="@+id/search_places"
-		style="@style/MaterialSearchBarLight"
+	<fragment
+		android:id="@+id/map"
+		android:name="com.google.android.gms.maps.SupportMapFragment"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:elevation="15dp"
-		android:outlineProvider="bounds"
-		app:mt_backIconTint="@color/colorPrimaryDark"
-		app:mt_borderlessRippleEnabled="false"
-		app:mt_hint="Search Desired Place Type"
-		app:mt_maxSuggestionsCount="5"
-		app:mt_placeholder="Search Desired Place Type"
-		app:mt_placeholderColor="@color/colorAccent"
-		app:mt_speechMode="false"
-		app:mt_navIconEnabled="true"
-		app:mt_navIconTint="@color/colorPrimaryDark"
-		android:layout_marginStart="16dp"
-		android:layout_marginEnd="16dp"
-		android:layout_marginTop="32dp"
+		android:layout_height="match_parent"
 		/>
 
+
+
 	<Button
-		android:id="@+id/search"
-		android:layout_width="match_parent"
+		android:id="@+id/route"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:background="@drawable/button"
 		android:layout_gravity="bottom|center"
 		android:layout_marginBottom="16dp"
 		android:layout_marginStart="16dp"
 		android:layout_marginEnd="16dp"
-		android:text="Search"
+		android:text="Get Route"
 		android:textColor="#ffff"
 		android:textStyle="bold"
-		android:textSize="25sp"/>
+		android:textSize="20sp"
+		android:padding="10dp"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

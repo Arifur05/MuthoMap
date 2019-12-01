@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.muthomap.R;
+import com.example.muthomap.adapters.RecyclerViewAdapter;
 import com.example.muthomap.models.Category;
 import com.example.muthomap.models.Food;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,7 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 
 /**
@@ -39,9 +42,91 @@ public class OrderFood extends Fragment {
 
     View view;
     public RecyclerView categoryRecyclerView , foodList;
-    private List<Category> categoryList;
+    private ArrayList<Category> categoryList;
+    String name, foodcatname;
 
     private DatabaseReference foodDatabase;
+    private View.OnClickListener onClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            RecyclerViewAdapter.MyViewHolder myViewHolder=(RecyclerViewAdapter.MyViewHolder) v.getTag();
+            int position= myViewHolder.getAdapterPosition();
+
+
+            Category cat= categoryList.get(position);
+            name= cat.getmCategoryName();
+            Toast.makeText(getContext(), "You clicked: " +name, LENGTH_SHORT).show();
+
+            if (name== "Pizza"){
+                foodcatname="pizza";
+            }
+            else if (name == "Burger") {
+                foodcatname = "burger";
+            }
+            else if (name=="Italian"){
+                foodcatname="pasta";
+            }
+
+            foodDatabase= FirebaseDatabase.getInstance().getReference().child("food").child("category").child(foodcatname);
+            FirebaseRecyclerOptions options= new FirebaseRecyclerOptions.Builder<Food>().setQuery(foodDatabase,Food.class).build();
+
+
+            FirebaseRecyclerAdapter<Food,FoodViewHolder> adapter= new FirebaseRecyclerAdapter<Food, FoodViewHolder>(options) {
+                @Override
+                protected void onBindViewHolder(@NonNull FoodViewHolder holder, int position, @NonNull Food model) {
+
+                    String foodID= getRef(position).getKey();
+
+
+                    foodDatabase.child(foodID).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.hasChild("image"))
+                            {
+
+                                String foodName= dataSnapshot.child("name").getValue().toString();
+                                String foodPrice= dataSnapshot.child("price").getValue().toString();
+
+                                Picasso.get()
+                                        .load(model.getImage())
+                                        .placeholder(R.drawable.ic_launcher_background)
+                                        .into(holder.mFoodImage);
+                                holder.mFoodName.setText(foodName);
+                                holder.mFoodPrice.setText(foodPrice);
+                            }
+                            else {
+                                String foodName= dataSnapshot.child("name").getValue().toString();
+                                String foodPrice= dataSnapshot.child("price").getValue().toString();
+                                holder.mFoodName.setText(foodName);
+                                holder.mFoodPrice.setText(foodPrice);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
+                }
+
+                @NonNull
+                @Override
+                public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                    View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item,parent,false);
+
+                    FoodViewHolder viewHolder= new FoodViewHolder(view);
+                    return viewHolder;
+                }
+            };
+
+            foodList.setAdapter(adapter);
+
+            adapter.startListening();
+
+        }
+    };
 
     public OrderFood() {
         // Required empty public constructor
@@ -55,6 +140,8 @@ public class OrderFood extends Fragment {
 
 
 
+
+
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_order_food, container, false);
         /*  This is for category*/
@@ -65,13 +152,14 @@ public class OrderFood extends Fragment {
        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
        categoryRecyclerView.setLayoutManager(linearLayoutManager);
        categoryRecyclerView.setAdapter(recyclerViewAdapter);
+       recyclerViewAdapter.setmOnItemClickListener(onClickListener);
 
         /*  This is for foodlist*/
 
         foodList=(RecyclerView) view.findViewById(R.id.recommended);
         foodList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        foodDatabase= FirebaseDatabase.getInstance().getReference().child("food").child("category").child("pizza");
+
 
 
         return view;
@@ -82,59 +170,6 @@ public class OrderFood extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions options= new FirebaseRecyclerOptions.Builder<Food>().setQuery(foodDatabase,Food.class).build();
-
-
-        FirebaseRecyclerAdapter<Food,FoodViewHolder> adapter= new FirebaseRecyclerAdapter<Food, FoodViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull FoodViewHolder holder, int position, @NonNull Food model) {
-
-                String foodID= getRef(position).getKey();
-
-
-                foodDatabase.child(foodID).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        if (dataSnapshot.hasChild("image"))
-                        {
-                            //String foodImage= dataSnapshot.child("image").getValue().toString();
-                            String foodName= dataSnapshot.child("name").getValue().toString();
-                            String foodPrice= dataSnapshot.child("price").getValue().toString();
-
-                            Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_launcher_background).into(holder.mFoodImage);
-                            holder.mFoodName.setText(foodName);
-                            holder.mFoodPrice.setText(foodPrice);
-                        }
-                        else {
-                            String foodName= dataSnapshot.child("name").getValue().toString();
-                            String foodPrice= dataSnapshot.child("price").getValue().toString();
-                            holder.mFoodName.setText(foodName);
-                            holder.mFoodPrice.setText(foodPrice);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-
-            }
-
-            @NonNull
-            @Override
-            public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item,parent,false);
-
-                FoodViewHolder viewHolder= new FoodViewHolder(view);
-                return viewHolder;
-            }
-        };
-
-        foodList.setAdapter(adapter);
-
-        adapter.startListening();
 
     }
 
@@ -162,6 +197,7 @@ public class OrderFood extends Fragment {
         categoryList.add(new Category("Indian",R.drawable.india));
         categoryList.add(new Category("Chinese",R.drawable.chinese));
         categoryList.add(new Category("Chicken",R.drawable.chicken));
+
 
     }
 

@@ -84,23 +84,7 @@ public class Profile extends AppCompatActivity {
     //path where imagees of profile and cover will  be stored
     String storagePath = "Users_Profile_Cover_Imgs/";
 
-    public Profile(){
 
-
-    }
-
-    /*
-    Check if Storage permission is granted or not
-     */
-    private boolean checkStoragePermission() {
-        /*check if storage permission is enebled or not
-        return true if enebled
-        return false if not
-         */
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -522,6 +506,23 @@ public class Profile extends AppCompatActivity {
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_REQUEST_CODE);
+    }
+    public Profile(){
+
+
+    }
+
+    /*
+    Check if Storage permission is granted or not
+     */
+    private boolean checkStoragePermission() {
+        /*check if storage permission is enebled or not
+        return true if enebled
+        return false if not
+         */
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result;
     }
     }
 

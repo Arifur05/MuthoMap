@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<item
-		android:id="@+id/action_favorites"
+		android:id="@+id/action_home"
 		android:enabled="true"
 		android:icon="@drawable/ic_home"
-		android:title="Home"
-		app:showAsAction="ifRoom" />
+		tools:ignore="MenuTitle"
+		 />
 	<item
 		android:id="@+id/action_friends"
 		android:enabled="true"
 		android:icon="@drawable/ic_users"
-		android:title="@string/Friends"
-		app:showAsAction="ifRoom"
+		tools:ignore="MenuTitle"
 		/>
 	<item
-		android:id="@+id/action_schedules"
+		android:id="@+id/action_chat"
 		android:enabled="true"
 		android:icon="@drawable/ic_send"
-		android:title="@string/Chat"
-		app:showAsAction="ifRoom" />
-	<item
-		android:id="@+id/action_music"
-		android:enabled="true"
-		android:icon="@drawable/ic_bell"
-		android:title="@string/Notification"
-		app:showAsAction="ifRoom" />
+		tools:ignore="MenuTitle"
+
+		/>
+
 
 </menu>

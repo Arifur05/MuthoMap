@@ -1,5 +1,7 @@
 package com.example.muthomap.models;
 
+import android.widget.Toast;
+
 public class Category {
     private String mCategoryName;
     private int mphoto;
@@ -28,5 +30,7 @@ public class Category {
 
     public void setMphoto(int mphoto) {
         this.mphoto = mphoto;
+
     }
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -7,62 +7,125 @@
 	android:orientation="vertical"
 	tools:context=".fragments.OrderFood">
 
+	<LinearLayout
+	android:id="@+id/linearLayout3"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	app:layout_constraintEnd_toEndOf="parent"
+	app:layout_constraintStart_toStartOf="parent"
+	app:layout_constraintTop_toTopOf="parent">
+
 	<TextView
+		android:layout_width="250dp"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:fontFamily="@font/aladin"
+		android:gravity="center"
+		android:text="Mutho Food"
+		android:textColor="#000"
+		android:textSize="40sp"
+		android:textStyle="bold" />
+
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/textView"
 		android:layout_width="100dp"
 		android:layout_height="wrap_content"
-		android:text="Categories"
-		android:textStyle="italic|bold"
-		android:textSize="25sp"
-		android:textColor="@color/colorAccent"
 		android:layout_gravity="center"
-		android:layout_marginTop="10dp"
-		android:layout_marginBottom="8dp"
-		android:fontFamily="@font/aladin"/>
+		android:fontFamily="@font/aladin"
+		android:text="Categories"
+		android:textColor="@color/colorAccent"
+		android:textSize="25sp"
+		android:textStyle="italic|bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+		android:layout_marginTop="4dp"/>
 
 	<View
+		android:id="@+id/view"
 		android:layout_width="match_parent"
-		android:layout_height="1dp"
+		android:layout_height="2dp"
 		android:background="#030303"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/textView"
+		android:layout_marginTop="4dp"
 		android:layout_marginStart="16dp"
-		android:layout_marginEnd="16dp"
-		android:layout_marginBottom="6dp"/>
+		android:layout_marginEnd="16dp"/>
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/category_list"
 		android:layout_width="wrap_content"
-		android:layout_height="206dp"
-
-		></androidx.recyclerview.widget.RecyclerView>
-	<TextView
-		android:layout_width="170dp"
 		android:layout_height="wrap_content"
-		android:text="Recommended"
-		android:textStyle="italic|bold"
-		android:textSize="30sp"
-		android:textColor="@color/colorAccent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/view"
+		android:layout_marginTop="8dp">
+
+	</androidx.recyclerview.widget.RecyclerView>
+
+	<TextView
+		android:id="@+id/textView2"
+		android:layout_width="130dp"
+		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:layout_marginTop="0dp"
-		android:layout_marginBottom="8dp"
-		android:fontFamily="@font/aladin"/>
+		android:fontFamily="@font/aladin"
+		android:paddingStart="8dp"
+		android:paddingEnd="8dp"
+		android:text="Foods Items"
+		android:textColor="@color/colorAccent"
+		android:textSize="25sp"
+		android:textStyle="italic|bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/category_list"
+		android:layout_marginTop="8dp"/>
+
 	<View
+		android:id="@+id/abc"
 		android:layout_width="match_parent"
-		android:layout_height="1dp"
+		android:layout_height="2dp"
 		android:background="#030303"
+		android:layout_marginTop="4dp"
 		android:layout_marginStart="16dp"
 		android:layout_marginEnd="16dp"
-		android:layout_marginBottom="6dp"/>
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/textView2"
+		/>
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/recommended"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="380dp"
+		android:layout_marginTop="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/abc"
+		>
 
 
 	</androidx.recyclerview.widget.RecyclerView>
 
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/check_out"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end|bottom"
+		android:layout_margin="16dp"
+		android:layout_marginBottom="16dp"
+		android:background="@color/colorAccent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.950"
+		app:layout_constraintStart_toStartOf="parent"
+		app:srcCompat="@drawable/ic_shopping_cart"
+		app:rippleColor="@color/white"
+		android:elevation="6dp"
+		app:elevation="6dp"/>
 
 
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

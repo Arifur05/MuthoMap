@@ -117,6 +117,14 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_share);
 
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        mapView= mapFragment.getView();
+
+
         mdestination = findViewById(R.id.destination);
 
         mgetRide = findViewById(R.id.getRide);
@@ -127,12 +135,6 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         mDriverRegno=findViewById(R.id.driverRegno);
         mdriverImage=findViewById(R.id.driverImage);
         mRatingBar=findViewById(R.id.driverRating);
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        mapView= mapFragment.getView();
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(RideShare.this);
         Places.initialize(RideShare.this, "AIzaSyA7P9PZHvlxNJ_whuOduejGHFdEfysg6Rg");

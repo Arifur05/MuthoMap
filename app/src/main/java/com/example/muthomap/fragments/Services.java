@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.example.muthomap.R;
+import com.example.muthomap.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class Services extends AppCompatActivity {

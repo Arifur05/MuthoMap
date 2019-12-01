@@ -1,4 +1,4 @@
-package com.example.muthomap.fragments;
+package com.example.muthomap.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,6 +19,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     List<Category> mcategory;
+    public View.OnClickListener mOnItemClickListener;
+
 
     public RecyclerViewAdapter(Context context, List<Category> mcategory) {
         this.context = context;
@@ -51,16 +53,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return  mcategory.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public void setmOnItemClickListener(View.OnClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView category_image;
         private TextView category_name;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             category_image= (ImageView) itemView.findViewById(R.id.category_image);
             category_name= itemView.findViewById(R.id.category_name);
+
+            itemView.setTag(this);
+            itemView.setOnClickListener(mOnItemClickListener);
+
+
 
         }
     }
