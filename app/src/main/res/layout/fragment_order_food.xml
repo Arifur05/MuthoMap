@@ -125,7 +125,10 @@
 		app:srcCompat="@drawable/ic_shopping_cart"
 		app:rippleColor="@color/white"
 		android:elevation="6dp"
-		app:elevation="6dp"/>
+		app:elevation="6dp"
+		android:clickable="true"
+		android:focusable="true"
+		android:foreground="?android:attr/selectableItemBackground"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

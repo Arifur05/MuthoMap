@@ -158,6 +158,9 @@ public class ActivityPost extends AppCompatActivity {
                         uploadPosts.put("description", postDescription);
                         uploadPosts.put("pImage", downloadUri);
                         uploadPosts.put("pTime", timeStamp);
+                        uploadPosts.put("pComments", "0");
+                        uploadPosts.put("pLikes", "0");
+
 
                         DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Posts");
                         reference1.child(timeStamp).setValue(uploadPosts).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -197,6 +200,9 @@ public class ActivityPost extends AppCompatActivity {
             uploadPosts.put("description", postDescription);
             uploadPosts.put("pImage", "noImage");
             uploadPosts.put("pTime", timeStamp);
+            uploadPosts.put("pComments", "0");
+            uploadPosts.put("pLikes", "0");
+
             DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Posts");
             reference1.child(timeStamp).setValue(uploadPosts).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -236,7 +242,7 @@ public class ActivityPost extends AppCompatActivity {
                         requestCameraPermission();
                     } else {
                         pickFromCamera();
-                        ;
+
                     }
                 }
                 if (which == 1) {

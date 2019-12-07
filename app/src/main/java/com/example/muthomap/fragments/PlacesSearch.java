@@ -81,7 +81,7 @@ public class PlacesSearch extends AppCompatActivity {
 
         mSearchButton = findViewById(R.id.search_button);
         mspinner = findViewById(R.id.places_search_spinner);
-        String[] places = {"Airport", "ATM Booth", "Bank", "Embassy", "Hospitals", "Shopping Mall", "Prayer Hall", "School", "University", "Gas Station", "Movie", "Tourist Place"};
+        String[] places = {"Airport", "ATM Booth", "Embassy", "Hospitals", "Shopping Mall", "Prayer Hall", "School", "University", "Movie", "Tourist Place"};
         ArrayAdapter<CharSequence> placeAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, places);
         placeAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         mspinner.setAdapter(placeAdapter);

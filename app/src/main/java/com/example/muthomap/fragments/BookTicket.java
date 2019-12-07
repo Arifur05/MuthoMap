@@ -45,21 +45,21 @@ public class BookTicket extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_book_ticket, container, false);
+        View view = inflater.inflate(R.layout.fragment_book_ticket, container, false);
 
-        mSingleWay= view.findViewById(R.id.single_way);
-        mRounded= view.findViewById(R.id.rounded);
-        mSingleWayCard= view.findViewById(R.id.cardView);
-        mRoundedCard2= view.findViewById(R.id.cardView2);
-        mfrom_input= view.findViewById(R.id.from_input);
-        mto_input= view.findViewById(R.id.to_input);
-        mpassenger_input=view.findViewById(R.id.passenger_input);
-        mdate= view.findViewById(R.id.date1);
+        mSingleWay = view.findViewById(R.id.single_way);
+        mRounded = view.findViewById(R.id.rounded);
+        mSingleWayCard = view.findViewById(R.id.cardView);
+        mRoundedCard2 = view.findViewById(R.id.cardView2);
+        mfrom_input = view.findViewById(R.id.from_input);
+        mto_input = view.findViewById(R.id.to_input);
+        mpassenger_input = view.findViewById(R.id.passenger_input);
+        mdate = view.findViewById(R.id.date1);
         // Inflate the layout for this fragment
 
 
-        mSubmit1=view.findViewById(R.id.submit);
-
+        mSubmit1 = view.findViewById(R.id.submit);
+        mSubmit2=view.findViewById(R.id.submit2);
 
         mSingleWay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,17 +84,15 @@ public class BookTicket extends Fragment {
             @Override
             public void onClick(View v) {
 
-                DatabaseReference mTicketDatabase=FirebaseDatabase.getInstance().getReference().child("ticket_order");
-                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                DatabaseReference mTicketDatabase = FirebaseDatabase.getInstance().getReference().child("ticket_order");
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
-
-                HashMap<String, Object> hashMap= new HashMap();
-                hashMap.put("id",currentFirebaseUser.getUid());
-                hashMap.put("From",mfrom_input.getText().toString());
-                hashMap.put("Destination",mto_input.getText().toString());
-                hashMap.put("Number of Tickets",mpassenger_input.getText().toString());
-                hashMap.put("Tour Date",mdate.getText().toString());
+                HashMap<String, Object> hashMap = new HashMap();
+                hashMap.put("id", currentFirebaseUser.getUid());
+                hashMap.put("From", mfrom_input.getText().toString());
+                hashMap.put("Destination", mto_input.getText().toString());
+                hashMap.put("Number of Tickets", mpassenger_input.getText().toString());
+                hashMap.put("Tour Date", mdate.getText().toString());
 
                 mTicketDatabase.setValue(hashMap);
 
@@ -103,8 +101,29 @@ public class BookTicket extends Fragment {
                 mto_input.getText().clear();
                 mpassenger_input.getText().clear();
                 mdate.getText().clear();
+            }
+        });
+        mSubmit2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                DatabaseReference mTicketDatabase = FirebaseDatabase.getInstance().getReference().child("ticket_order");
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+                HashMap<String, Object> hashMap = new HashMap();
+                hashMap.put("id", currentFirebaseUser.getUid());
+                hashMap.put("From", mfrom_input.getText().toString());
+                hashMap.put("Destination", mto_input.getText().toString());
+                hashMap.put("Number of Tickets", mpassenger_input.getText().toString());
+                hashMap.put("Tour Date", mdate.getText().toString());
+
+                mTicketDatabase.setValue(hashMap);
+
+                Toast.makeText(getContext(), "Successfully Submitted", Toast.LENGTH_SHORT).show();
+                mfrom_input.getText().clear();
+                mto_input.getText().clear();
+                mpassenger_input.getText().clear();
+                mdate.getText().clear();
             }
         });
 

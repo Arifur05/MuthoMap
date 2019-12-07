@@ -29,7 +29,8 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-		<activity android:name=".fragments.PostDetailActivity"></activity>
+		<activity android:name=".fragments.CartActivity"></activity>
+		<activity android:name=".fragments.PostDetailActivity" />
 		<activity android:name=".fragments.ActivityPost" />
 		<activity android:name=".fragments.ChatActivity" />
 		<!--

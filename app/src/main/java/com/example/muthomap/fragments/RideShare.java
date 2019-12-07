@@ -92,9 +92,8 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlacesClient mPlacesClient;
     private LocationCallback locationCallback;
-    private LatLng pickupLocation,destinationLocation;
-     Marker pickupMarker , destinationMarker;
-
+    private LatLng pickupLocation, destinationLocation;
+    Marker pickupMarker, destinationMarker;
 
 
     //Getting driver
@@ -104,7 +103,6 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
     private RatingBar mRatingBar;
 
     private Boolean requestBol = false;
-
 
 
     //init views
@@ -122,19 +120,19 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mapView= mapFragment.getView();
+        mapView = mapFragment.getView();
 
 
         mdestination = findViewById(R.id.destination);
 
         mgetRide = findViewById(R.id.getRide);
 
-        mDriverInfo=findViewById(R.id.driverInfo);
-        mDriverName=findViewById(R.id.driverName);
-        mDriverPhone=findViewById(R.id.driverPhone);
-        mDriverRegno=findViewById(R.id.driverRegno);
-        mdriverImage=findViewById(R.id.driverImage);
-        mRatingBar=findViewById(R.id.driverRating);
+        mDriverInfo = findViewById(R.id.driverInfo);
+        mDriverName = findViewById(R.id.driverName);
+        mDriverPhone = findViewById(R.id.driverPhone);
+        mDriverRegno = findViewById(R.id.driverRegno);
+        mdriverImage = findViewById(R.id.driverImage);
+        mRatingBar = findViewById(R.id.driverRating);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(RideShare.this);
         Places.initialize(RideShare.this, "AIzaSyA7P9PZHvlxNJ_whuOduejGHFdEfysg6Rg");
@@ -142,15 +140,13 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
 
 
-
         mgetRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (requestBol){
+                if (requestBol) {
                     endRide();
-                }
-                else {
+                } else {
                     String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference dataref = FirebaseDatabase.getInstance().getReference("customer_request");
                     GeoFire geoFire = new GeoFire(dataref);
@@ -167,7 +163,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
                     pickupLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                     pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLocation).title("Pick me here")
-                            .icon(bitmapDescriptorFromVector(RideShare.this,R.drawable.ic_pickup)));
+                            .icon(bitmapDescriptorFromVector(RideShare.this, R.drawable.ic_pickup)));
 
                     mgetRide.setText("Searching for Driver");
 
@@ -185,19 +181,18 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
             public void onSearchStateChanged(boolean enabled) {
 
 
-
             }
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
 
-                startSearch(text.toString(),true,null,true);
+                startSearch(text.toString(), true, null, true);
             }
 
             @Override
             public void onButtonClicked(int buttonCode) {
 
-                if (buttonCode == MaterialSearchBar.BUTTON_BACK){
+                if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     mdestination.disableSearch();
                 }
 
@@ -216,7 +211,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                FindAutocompletePredictionsRequest predictionsRequest= FindAutocompletePredictionsRequest.builder()
+                FindAutocompletePredictionsRequest predictionsRequest = FindAutocompletePredictionsRequest.builder()
                         .setCountry("bd")
                         .setTypeFilter(TypeFilter.ADDRESS)
                         .setSessionToken(token)
@@ -226,24 +221,23 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                     @Override
                     public void onComplete(@NonNull Task<FindAutocompletePredictionsResponse> task) {
 
-                        if (task.isSuccessful()){
-                            FindAutocompletePredictionsResponse predictionsResponse= task.getResult();
-                            if (predictionsResponse!= null){
-                                predictionList= predictionsResponse.getAutocompletePredictions();
+                        if (task.isSuccessful()) {
+                            FindAutocompletePredictionsResponse predictionsResponse = task.getResult();
+                            if (predictionsResponse != null) {
+                                predictionList = predictionsResponse.getAutocompletePredictions();
                                 List<String> suggestions = new ArrayList<>();
-                                for (int i=0; i <predictionList.size(); i++){
-                                    AutocompletePrediction autocompletePrediction=predictionList.get(i);
+                                for (int i = 0; i < predictionList.size(); i++) {
+                                    AutocompletePrediction autocompletePrediction = predictionList.get(i);
                                     suggestions.add(autocompletePrediction.getFullText(null).toString());
                                 }
                                 mdestination.updateLastSuggestions(suggestions);
-                                if (!mdestination.isSuggestionsVisible()){
+                                if (!mdestination.isSuggestionsVisible()) {
                                     mdestination.showSuggestionsList();
                                 }
 
                             }
-                        }
-                        else {
-                            Log.i("mytag","Predictions fetching task unsuccessful");
+                        } else {
+                            Log.i("mytag", "Predictions fetching task unsuccessful");
                         }
 
                     }
@@ -261,7 +255,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         mdestination.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
             @Override
             public void OnItemClickListener(int position, View v) {
-                if(position >= predictionList.size()){
+                if (position >= predictionList.size()) {
                     return;
                 }
                 AutocompletePrediction selectedPrediction = predictionList.get(position);
@@ -273,28 +267,27 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                     public void run() {
                         mdestination.clearSuggestions();
                     }
-                },500);
+                }, 500);
 
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(inputMethodManager != null){
-                    inputMethodManager.hideSoftInputFromWindow(mdestination.getWindowToken(),InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(mdestination.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                     final String placeId = selectedPrediction.getPlaceId();
-                    List<Place.Field> placeFields= Arrays.asList(Place.Field.LAT_LNG);
-                    FetchPlaceRequest fetchPlaceRequest= FetchPlaceRequest.builder(placeId,placeFields).build();
-                    mPlacesClient.fetchPlace(fetchPlaceRequest ).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                    List<Place.Field> placeFields = Arrays.asList(Place.Field.LAT_LNG);
+                    FetchPlaceRequest fetchPlaceRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
+                    mPlacesClient.fetchPlace(fetchPlaceRequest).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
                         @Override
                         public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
 
-                            Place place= fetchPlaceResponse.getPlace();
-                            Log.i("mytag","Found" +place.getName());
-                            destinationLocation= place.getLatLng();
-                            destination=place.getName();
-                            if (destinationLocation != null){
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLocation,DEFAULT_ZOOM));
-                                destinationMarker=mMap.addMarker(new MarkerOptions().position(destinationLocation)
+                            Place place = fetchPlaceResponse.getPlace();
+                            Log.i("mytag", "Found" + place.getName());
+                            destinationLocation = place.getLatLng();
+                            destination = place.getName();
+                            if (destinationLocation != null) {
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLocation, DEFAULT_ZOOM));
+                                destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation)
                                         .draggable(true)
                                         .title("Destination").icon(BitmapDescriptorFactory.defaultMarker()));
-
 
 
                             }
@@ -304,12 +297,12 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            if (e instanceof ApiException){
-                                ApiException apiException= (ApiException) e;
+                            if (e instanceof ApiException) {
+                                ApiException apiException = (ApiException) e;
                                 apiException.printStackTrace();
-                                int statuscode= apiException.getStatusCode();
-                                Log.i("mytag","Place not found:  "+ e.getMessage());
-                                Log.i("mytag","Staus code:  "+ statuscode);
+                                int statuscode = apiException.getStatusCode();
+                                Log.i("mytag", "Place not found:  " + e.getMessage());
+                                Log.i("mytag", "Staus code:  " + statuscode);
                             }
                         }
                     });
@@ -329,47 +322,47 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
     /* ----->Get Closest Driver method <-------
       |  This method is responsible for getting driver for request |
     */
-    private int radius=100;
-    private Boolean driverFound= false;
+    private int radius = 100;
+    private Boolean driverFound = false;
     private String driverFoundID;
     GeoQuery geoQuery;
 
     private void getClosestDriver() {
         DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference().child("driverAvailable");
 
-        GeoFire geoFire= new GeoFire(driverLocation);
-        geoQuery= geoFire.queryAtLocation(new GeoLocation(pickupLocation.latitude,pickupLocation.longitude),radius);
+        GeoFire geoFire = new GeoFire(driverLocation);
+        geoQuery = geoFire.queryAtLocation(new GeoLocation(pickupLocation.latitude, pickupLocation.longitude), radius);
         geoQuery.removeAllListeners();
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
-                if (!driverFound && requestBol){
-                    DatabaseReference mCustomerDatabase= FirebaseDatabase.getInstance().getReference()
+                if (!driverFound && requestBol) {
+                    DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference()
                             .child("user").child("service_provider").child("uber_driver").child(key);
                     mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()&& dataSnapshot.getChildrenCount()>0){
-                                Map<String, Object> driverMap=(Map<String, Object>)dataSnapshot.getValue();
-                                if (driverFound){
+                            if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                                Map<String, Object> driverMap = (Map<String, Object>) dataSnapshot.getValue();
+                                if (driverFound) {
                                     return;
                                 }
-                                if (driverMap.get("service"). equals(requestService)){
-                                    driverFound=true;
-                                    driverFoundID=dataSnapshot.getKey();
-                                    String destinationName= destination;
-                                    Double destinationLat= destinationLocation.latitude;
-                                    Double destinationLng= destinationLocation.longitude;
+                                if (driverMap.get("service").equals(requestService)) {
+                                    driverFound = true;
+                                    driverFoundID = dataSnapshot.getKey();
+                                    String destinationName = destination;
+                                    Double destinationLat = destinationLocation.latitude;
+                                    Double destinationLng = destinationLocation.longitude;
 
-                                    DatabaseReference driverref= FirebaseDatabase.getInstance().getReference("user").child("service_provider").child("uber_driver")
+                                    DatabaseReference driverref = FirebaseDatabase.getInstance().getReference("user").child("service_provider").child("uber_driver")
                                             .child(driverFoundID).child("customer_request");
-                                    String customerID= FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                    HashMap hashMap= new HashMap();
-                                    hashMap.put("customerRideID",customerID);
-                                    hashMap.put("destination",destinationName);
-                                    hashMap.put("destinationLat",destinationLat);
-                                    hashMap.put("destinationLng",destinationLng);
+                                    String customerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    HashMap hashMap = new HashMap();
+                                    hashMap.put("customerRideID", customerID);
+                                    hashMap.put("destination", destinationName);
+                                    hashMap.put("destinationLat", destinationLat);
+                                    hashMap.put("destinationLng", destinationLng);
 
                                     driverref.updateChildren(hashMap);
 
@@ -387,7 +380,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
                         }
                     });
-                    }
+                }
             }
 
             @Override
@@ -402,7 +395,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
             @Override
             public void onGeoQueryReady() {
-                if (!driverFound){
+                if (!driverFound) {
                     radius++;
                     getClosestDriver();
                 }
@@ -420,17 +413,17 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
 
     private DatabaseReference driveHasEndedRef;
     private ValueEventListener driveHasEndedRefListener;
+
     private void getHasRideEnded() {
 
         driveHasEndedRef = FirebaseDatabase.getInstance().getReference().child("user").child("service_provider").child("uber_driver")
                 .child(driverFoundID).child("customer_request").child("customerRideID");
-        driveHasEndedRefListener=driveHasEndedRef.addValueEventListener(new ValueEventListener() {
+        driveHasEndedRefListener = driveHasEndedRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
-                }
-                else{
+                } else {
                     endRide();
                 }
             }
@@ -447,34 +440,34 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                     */
     private void getDriverInfo() {
         mDriverInfo.setVisibility(View.VISIBLE);
-        DatabaseReference mCustomerDatabase= FirebaseDatabase.getInstance().getReference()
+        DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference()
                 .child("user").child("service_provider").child("uber_driver").child(driverFoundID);
         mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
-                    if(dataSnapshot.child("name")!=null){
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                    if (dataSnapshot.child("name") != null) {
                         mDriverName.setText(dataSnapshot.child("name").getValue().toString());
                     }
-                    if(dataSnapshot.child("phone")!=null){
+                    if (dataSnapshot.child("phone") != null) {
                         mDriverPhone.setText(dataSnapshot.child("phone").getValue().toString());
                     }
-                    if(dataSnapshot.child("car")!=null){
+                    if (dataSnapshot.child("car") != null) {
                         mDriverRegno.setText(dataSnapshot.child("car").getValue().toString());
                     }
-                    if(dataSnapshot.child("profileImageUrl").getValue()!=null){
-                       Glide.with(getApplication()).load(dataSnapshot.child("profileImageUrl").getValue().toString()).into(mdriverImage);
+                    if (dataSnapshot.child("profileImageUrl").getValue() != null) {
+                        Glide.with(getApplication()).load(dataSnapshot.child("profileImageUrl").getValue().toString()).into(mdriverImage);
                     }
 
-                    int ratingSum=0;
-                    float ratingsTotal=0;
-                    float ratingsAvg=0;
-                    for (DataSnapshot child : dataSnapshot.child("rating").getChildren()){
+                    int ratingSum = 0;
+                    float ratingsTotal = 0;
+                    float ratingsAvg = 0;
+                    for (DataSnapshot child : dataSnapshot.child("rating").getChildren()) {
                         ratingSum = ratingSum + Integer.valueOf(child.getValue().toString());
                         ratingsTotal++;
                     }
-                    if(ratingsTotal!= 0){
-                        ratingsAvg = ratingSum/ratingsTotal;
+                    if (ratingsTotal != 0) {
+                        ratingsAvg = ratingSum / ratingsTotal;
                         mRatingBar.setRating(ratingsAvg);
                     }
                 }
@@ -498,57 +491,58 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
     private Marker mDriverMarker;
     private DatabaseReference driverLocationRef;
     ValueEventListener driverLocationRefListener;
+
     private void getDriverLocation() {
 
-            driverLocationRef= FirebaseDatabase.getInstance().getReference().child("driverWorking").child(driverFoundID).child("l");
-            driveHasEndedRefListener=driverLocationRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()){
-                        List<Object> map= (List<Object>) dataSnapshot.getValue();
-                        double locationlat= 0;
-                        double locationlng=0;
-                        mgetRide.setText("Driver Found");
+        driverLocationRef = FirebaseDatabase.getInstance().getReference().child("driverWorking").child(driverFoundID).child("l");
+        driveHasEndedRefListener = driverLocationRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    List<Object> map = (List<Object>) dataSnapshot.getValue();
+                    double locationlat = 0;
+                    double locationlng = 0;
+                    mgetRide.setText("Driver Found");
 
-                        if (map.get(0) != null){
-                            locationlat= Double.parseDouble(map.get(0).toString());
-                        }
-                        if (map.get(1) != null){
-                            locationlng= Double.parseDouble(map.get(1).toString());
-                        }
-                        LatLng driverLatlng= new LatLng(locationlat,locationlng);
-                        if (mDriverMarker!=null){
-                            mDriverMarker.remove();
-                        }
-
-                        Location loc1 = new Location("");
-                        loc1.setLatitude(pickupLocation.latitude);
-                        loc1.setLongitude(pickupLocation.longitude);
-
-                        Location loc2 = new Location("");
-                        loc2.setLatitude(driverLatlng.latitude);
-                        loc2.setLongitude(driverLatlng.longitude);
-
-                        float distance = loc1.distanceTo(loc2);
-
-                        if (distance<100){
-                            mgetRide.setText("Driver's Here");
-                        }else{
-                            mgetRide.setText("Driver Found: " + String.valueOf(distance));
-                        }
-
-
-                        mDriverMarker=mMap.addMarker(new MarkerOptions().position(driverLatlng).title("your Driver")
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car)));
-
+                    if (map.get(0) != null) {
+                        locationlat = Double.parseDouble(map.get(0).toString());
                     }
-                }
+                    if (map.get(1) != null) {
+                        locationlng = Double.parseDouble(map.get(1).toString());
+                    }
+                    LatLng driverLatlng = new LatLng(locationlat, locationlng);
+                    if (mDriverMarker != null) {
+                        mDriverMarker.remove();
+                    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Location loc1 = new Location("");
+                    loc1.setLatitude(pickupLocation.latitude);
+                    loc1.setLongitude(pickupLocation.longitude);
+
+                    Location loc2 = new Location("");
+                    loc2.setLatitude(driverLatlng.latitude);
+                    loc2.setLongitude(driverLatlng.longitude);
+
+                    float distance = loc1.distanceTo(loc2);
+
+                    if (distance < 100) {
+                        mgetRide.setText("Driver's Here");
+                    } else {
+                        mgetRide.setText("Driver Found: " + String.valueOf(distance));
+                    }
+
+
+                    mDriverMarker = mMap.addMarker(new MarkerOptions().position(driverLatlng).title("your Driver")
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car)));
 
                 }
-            });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -579,10 +573,10 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customer_request");
         GeoFire geoFire = new GeoFire(ref);
         geoFire.removeLocation(userId);
-        if(pickupMarker != null){
+        if (pickupMarker != null) {
             pickupMarker.remove();
         }
-        if (mDriverMarker != null){
+        if (mDriverMarker != null) {
             mDriverMarker.remove();
         }
         mgetRide.setText("call Uber");
@@ -648,10 +642,10 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public boolean onMyLocationButtonClick() {
 
-                if (mdestination.isSuggestionsVisible()){
+                if (mdestination.isSuggestionsVisible()) {
                     mdestination.clearSuggestions();
                 }
-                if(mdestination.isSearchEnabled()){
+                if (mdestination.isSearchEnabled()) {
                     mdestination.disableSearch();
                 }
 
@@ -699,7 +693,7 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                                         }
                                         mLastLocation = locationResult.getLastLocation();
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), DEFAULT_ZOOM));
-                                        pickupLocation= new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+                                        pickupLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                                         mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
                                     }
                                 };
@@ -712,7 +706,6 @@ public class RideShare extends FragmentActivity implements OnMapReadyCallback {
                 });
 
     }
-
 
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorResId) {

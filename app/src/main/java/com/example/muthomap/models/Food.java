@@ -4,17 +4,18 @@ package com.example.muthomap.models;
 
 public class Food {
     private String image;
-    private String name, price;
+    private String name, price,foodID;
 
 
 
     public Food() {
     }
 
-    public Food(String image, String name, String price) {
+    public Food(String image, String name, String price, String foodID) {
         this.image = image;
         this.name = name;
         this.price = price;
+        this.foodID = foodID;
     }
 
 
@@ -40,5 +41,13 @@ public class Food {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getFoodID() {
+        return foodID;
+    }
+
+    public void setFoodID(String foodID) {
+        this.foodID = foodID;
     }
 }
